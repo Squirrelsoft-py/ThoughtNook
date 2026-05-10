@@ -59,15 +59,10 @@ jobs:
           git add -A
           git commit -m "chore: sync upstream (conflicts need resolution)"
           git push origin "$BRANCH"
+          printf 'Automatic daily sync from open-webui/open-webui.\n\nThis PR contains merge conflicts (marked with <<<<<<< / ======= / >>>>>>>).\nPlease resolve them, then merge this PR into `main`.' > /tmp/pr-body.txt
           gh pr create \
-            --title "Upstream sync $(date +%Y-%m-%d) — conflicts need resolution" \
-            --body "$(cat <<'EOF'
-Automatic daily sync from [open-webui/open-webui](https://github.com/open-webui/open-webui).
-
-This PR contains merge conflicts (marked with `<<<<<<<` / `=======` / `>>>>>>>`).
-Please resolve them, then merge this PR into \`main\`.
-EOF
-)" \
+            --title "Upstream sync $(date +%Y-%m-%d) - conflicts need resolution" \
+            --body-file /tmp/pr-body.txt \
             --head "$BRANCH" \
             --base main \
             --draft
