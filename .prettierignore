@@ -312,3 +312,4 @@ cypress/screenshots
 
 
 /static/*
+backend/open_webui/static/custom.css
