@@ -2,27 +2,60 @@
  * ThoughtNook theme — warm library aesthetic
  *
  * Palette from ThoughtNook.html:
- *   Paper  #faf9f5  oklch(0.98 0.008 85)
- *   Cream  #f6f1e7  oklch(0.95 0.018 85)
- *   Green  #5a7a48  oklch(0.51 0.09 145)
+ *   Paper   #faf9f5   oklch(0.98 0.008 85)
+ *   Cream   #f6f1e7   oklch(0.95 0.018 85)
+ *   Text    #2a2620   oklch(0.19 0.012 60)
+ *   Muted   #8a8275   oklch(0.57 0.01  70)
+ *   Green   #5a7a48   oklch(0.51 0.09 145)
  *
- * Only CSS variable overrides — no Tailwind class selectors, no layout
- * changes. This file is never touched by upstream; it will never conflict.
+ * Fonts: DM Sans (UI), Spectral (headings), JetBrains Mono (code)
+ *
+ * !important is required throughout: custom.css loads before the Tailwind
+ * stylesheet, so Tailwind's :root rules would otherwise win.
  */
 
-/* Warm gray scale (light mode only) — shifts neutral grays to a paper tone */
-/* !important is required: custom.css loads before the Tailwind stylesheet */
+/* ── Google Fonts ────────────────────────────────────────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap");
+
+/* ── Font assignments ────────────────────────────────────────────────────── */
+html {
+  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Spectral", Georgia, serif !important;
+}
+
+pre,
+code,
+kbd,
+samp {
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+}
+
+/* ── Warm gray scale (light mode) ───────────────────────────────────────── */
+/* Backgrounds shift to paper/cream; text shifts to warm dark brown #2a2620 */
 :root:not(.dark) {
   --color-gray-50: oklch(0.98 0.008 85) !important; /* paper white #faf9f5 */
   --color-gray-100: oklch(0.95 0.018 85) !important; /* cream #f6f1e7 */
   --color-gray-200: oklch(0.9 0.012 82) !important;
   --color-gray-300: oklch(0.84 0.01 82) !important;
   --color-gray-400: oklch(0.74 0.008 80) !important;
-  --color-gray-500: oklch(0.62 0.006 80) !important;
+  --color-gray-500: oklch(0.62 0.006 80) !important; /* muted text ≈ #8a8275 */
   --color-gray-600: oklch(0.5 0.005 80) !important;
+  --color-gray-700: oklch(0.36 0.01 65) !important;
+  --color-gray-800: oklch(0.27 0.012 62) !important;
+  --color-gray-850: oklch(0.22 0.012 61) !important;
+  --color-gray-900: oklch(0.19 0.012 60) !important; /* primary text ≈ #2a2620 */
+  --color-gray-950: oklch(0.14 0.01 60) !important;
 }
 
-/* Forest green accent — replaces default blue for buttons, checkboxes, focus rings */
+/* ── Forest green accent — replaces default blue ────────────────────────── */
 :root {
   --color-blue-300: oklch(0.68 0.08 145) !important;
   --color-blue-400: oklch(0.6 0.09 145) !important;
@@ -31,7 +64,7 @@
   --color-blue-700: oklch(0.38 0.08 145) !important;
 }
 
-/* Dark mode — subtle warm undertone */
+/* ── Dark mode — warm undertone ─────────────────────────────────────────── */
 :root.dark {
   --color-gray-900: oklch(0.19 0.008 130) !important;
   --color-gray-950: oklch(0.14 0.008 130) !important;
