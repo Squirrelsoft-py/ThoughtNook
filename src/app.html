@@ -115,6 +115,38 @@
 			})();
 		</script>
 
+		<script>
+			// ThoughtNook accent picker — applies stored accent before first paint to avoid FOUC
+			(() => {
+				const accent = localStorage.thoughtnookAccent || 'sage';
+				document.documentElement.dataset.accent = accent;
+
+				const accents = ['sage', 'ochre', 'burgundy', 'slate', 'ink', 'terracotta'];
+
+				document.addEventListener('DOMContentLoaded', () => {
+					const picker = document.createElement('div');
+					picker.id = 'tn-picker';
+					picker.innerHTML = accents
+						.map(
+							(a) =>
+								`<button data-a="${a}" title="${a}"${a === accent ? ' class="on"' : ''}></button>`
+						)
+						.join('');
+					picker.addEventListener('click', (e) => {
+						const btn = e.target.closest('[data-a]');
+						if (!btn) return;
+						const a = btn.dataset.a;
+						localStorage.thoughtnookAccent = a;
+						document.documentElement.dataset.accent = a;
+						picker
+							.querySelectorAll('[data-a]')
+							.forEach((b) => b.classList.toggle('on', b.dataset.a === a));
+					});
+					document.body.appendChild(picker);
+				});
+			})();
+		</script>
+
 		<title>Open WebUI</title>
 
 		%sveltekit.head%

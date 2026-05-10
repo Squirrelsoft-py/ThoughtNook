@@ -1,5 +1,5 @@
 /*
- * ThoughtNook theme — warm library aesthetic, Sage accent
+ * ThoughtNook theme — warm library aesthetic
  *
  * Base palette (from ThoughtNook.html CSS variables):
  *   page      #faf6ed   oklch(0.974 0.013 87)  — lightest bg / input areas
@@ -11,10 +11,19 @@
  *   ink-soft  #5a5247   oklch(0.443 0.020 76)  — secondary text
  *   ink       #2a2620   oklch(0.271 0.012 78)  — primary text
  *
- * Sage accent (from ThoughtNook.html ACCENTS.sage):
- *   base      #5a7a48   oklch(0.542 0.083 135) — interactive / buttons
- *   deep      #3a5a2c   oklch(0.430 0.081 137) — hover / pressed
- *   soft      #cfdcc1   oklch(0.877 0.039 128) — subtle tints
+ * Accent options (from ThoughtNook.html ACCENTS object):
+ *   sage        #5a7a48  oklch(0.542 0.083 135)
+ *   ochre       #b88421  oklch(0.649 0.125 78)
+ *   burgundy    #9a3a3a  oklch(0.483 0.129 23)
+ *   slate       #4a6a82  oklch(0.509 0.053 242)
+ *   ink         #2a2620  oklch(0.271 0.012 78)
+ *   terracotta  #c96b3a  oklch(0.627 0.135 46)
+ *
+ * Accent touch-points in OpenWebUI:
+ *   - Primary buttons:        bg-black hover:bg-gray-900   → --tn-accent / --tn-accent-deep
+ *   - Toggle switches:        bg-emerald-500               → --color-emerald-500 (via --tn-accent)
+ *   - Checkboxes:             bg-blue-600 focus:ring-blue-500 → --color-blue-*
+ *   - Sidebar active mark:    div.rounded-r-lg.bg-black    → --tn-accent
  *
  * Fonts: DM Sans (UI), Spectral (headings), JetBrains Mono (code)
  *
@@ -65,17 +74,163 @@ samp {
   --color-gray-950: oklch(0.190 0.010 76) !important;
 }
 
-/* ── Sage accent — replaces default blue ────────────────────────────────── */
-:root {
-  --color-blue-300: oklch(0.750 0.030 130) !important; /* near sage-soft */
-  --color-blue-400: oklch(0.650 0.055 132) !important;
-  --color-blue-500: oklch(0.542 0.083 135) !important; /* sage base #5a7a48 */
-  --color-blue-600: oklch(0.480 0.082 136) !important;
-  --color-blue-700: oklch(0.430 0.081 137) !important; /* sage deep #3a5a2c */
-}
-
 /* ── Dark mode — warm dark undertone ────────────────────────────────────── */
 :root.dark {
   --color-gray-900: oklch(0.160 0.010 75) !important;
   --color-gray-950: oklch(0.120 0.010 74) !important;
 }
+
+/* ── Accent variants ─────────────────────────────────────────────────────── */
+/*
+ * Each block sets:
+ *   --tn-accent / --tn-accent-deep   used by button + emerald overrides below
+ *   --color-blue-*                   checkboxes, focus rings
+ */
+
+:root {
+  /* default = sage */
+  --tn-accent:        oklch(0.542 0.083 135);
+  --tn-accent-deep:   oklch(0.430 0.081 137);
+  --color-blue-300:   oklch(0.750 0.030 130) !important;
+  --color-blue-400:   oklch(0.650 0.055 132) !important;
+  --color-blue-500:   oklch(0.542 0.083 135) !important; /* #5a7a48 */
+  --color-blue-600:   oklch(0.480 0.082 136) !important;
+  --color-blue-700:   oklch(0.430 0.081 137) !important; /* #3a5a2c */
+}
+
+:root[data-accent="sage"] {
+  --tn-accent:        oklch(0.542 0.083 135);
+  --tn-accent-deep:   oklch(0.430 0.081 137);
+  --color-blue-300:   oklch(0.750 0.030 130) !important;
+  --color-blue-400:   oklch(0.650 0.055 132) !important;
+  --color-blue-500:   oklch(0.542 0.083 135) !important; /* #5a7a48 */
+  --color-blue-600:   oklch(0.480 0.082 136) !important;
+  --color-blue-700:   oklch(0.430 0.081 137) !important; /* #3a5a2c */
+}
+
+:root[data-accent="ochre"] {
+  --tn-accent:        oklch(0.649 0.125 78);
+  --tn-accent-deep:   oklch(0.492 0.094 80);
+  --color-blue-300:   oklch(0.800 0.050 85)  !important;
+  --color-blue-400:   oklch(0.720 0.085 80)  !important;
+  --color-blue-500:   oklch(0.649 0.125 78)  !important; /* #b88421 */
+  --color-blue-600:   oklch(0.570 0.110 79)  !important;
+  --color-blue-700:   oklch(0.492 0.094 80)  !important; /* #7d5a14 */
+}
+
+:root[data-accent="burgundy"] {
+  --tn-accent:        oklch(0.483 0.129 23);
+  --tn-accent-deep:   oklch(0.378 0.101 23);
+  --color-blue-300:   oklch(0.740 0.035 20)  !important;
+  --color-blue-400:   oklch(0.620 0.080 22)  !important;
+  --color-blue-500:   oklch(0.483 0.129 23)  !important; /* #9a3a3a */
+  --color-blue-600:   oklch(0.430 0.115 23)  !important;
+  --color-blue-700:   oklch(0.378 0.101 23)  !important; /* #6e2727 */
+}
+
+:root[data-accent="slate"] {
+  --tn-accent:        oklch(0.509 0.053 242);
+  --tn-accent-deep:   oklch(0.397 0.050 244);
+  --color-blue-300:   oklch(0.750 0.020 241) !important;
+  --color-blue-400:   oklch(0.630 0.037 241) !important;
+  --color-blue-500:   oklch(0.509 0.053 242) !important; /* #4a6a82 */
+  --color-blue-600:   oklch(0.453 0.051 243) !important;
+  --color-blue-700:   oklch(0.397 0.050 244) !important; /* #2f4a60 */
+}
+
+:root[data-accent="ink"] {
+  --tn-accent:        oklch(0.350 0.013 79);
+  --tn-accent-deep:   oklch(0.271 0.012 78);
+  --color-blue-300:   oklch(0.700 0.012 82)  !important;
+  --color-blue-400:   oklch(0.500 0.014 80)  !important;
+  --color-blue-500:   oklch(0.350 0.013 79)  !important;
+  --color-blue-600:   oklch(0.271 0.012 78)  !important; /* #2a2620 */
+  --color-blue-700:   oklch(0.160 0.010 75)  !important;
+}
+
+:root[data-accent="terracotta"] {
+  --tn-accent:        oklch(0.627 0.135 46);
+  --tn-accent-deep:   oklch(0.460 0.112 43);
+  --color-blue-300:   oklch(0.770 0.055 57)  !important;
+  --color-blue-400:   oklch(0.700 0.100 50)  !important;
+  --color-blue-500:   oklch(0.627 0.135 46)  !important; /* #c96b3a */
+  --color-blue-600:   oklch(0.543 0.117 44)  !important;
+  --color-blue-700:   oklch(0.460 0.112 43)  !important; /* #8a3f1e */
+}
+
+/* ── Apply accent to all touch-points ───────────────────────────────────── */
+
+/* Toggle switches (bits-ui Switch uses bg-emerald-500 / dark:bg-emerald-700) */
+:root {
+  --color-emerald-500: var(--tn-accent)      !important;
+  --color-emerald-700: var(--tn-accent-deep) !important;
+}
+
+/* Primary buttons (bg-black text-white hover:bg-gray-900) — light mode only */
+:root:not(.dark) button.bg-black {
+  background-color: var(--tn-accent) !important;
+}
+:root:not(.dark) button.bg-black:hover {
+  background-color: var(--tn-accent-deep) !important;
+}
+
+/* Sidebar active-chat indicator (div.rounded-r-lg.w-1.h-8.bg-black) */
+:root:not(.dark) .rounded-r-lg.bg-black {
+  background-color: var(--tn-accent) !important;
+}
+
+/* ── Accent picker widget ────────────────────────────────────────────────── */
+#tn-picker {
+  position: fixed;
+  bottom: 1rem;
+  right: 1.5rem;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 8px;
+  background: oklch(0.948 0.019 83 / 0.92);
+  backdrop-filter: blur(8px);
+  border: 1px solid oklch(0.856 0.037 90);
+  border-radius: 999px;
+  box-shadow: 0 2px 10px rgba(42, 38, 32, 0.15);
+}
+
+.dark #tn-picker {
+  background: oklch(0.160 0.010 75 / 0.92);
+  border-color: oklch(0.260 0.012 76);
+}
+
+#tn-picker button {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.15s, box-shadow 0.15s;
+  outline: none;
+  /* override the primary-button rule above for these swatches */
+  background-color: unset !important;
+}
+
+#tn-picker button:hover {
+  transform: scale(1.25);
+  background-color: unset !important;
+}
+
+#tn-picker button.on {
+  box-shadow: 0 0 0 2px oklch(0.948 0.019 83);
+  transform: scale(1.2);
+}
+
+.dark #tn-picker button.on {
+  box-shadow: 0 0 0 2px oklch(0.120 0.010 74);
+}
+
+#tn-picker [data-a="sage"]       { background-color: #5a7a48 !important; }
+#tn-picker [data-a="ochre"]      { background-color: #b88421 !important; }
+#tn-picker [data-a="burgundy"]   { background-color: #9a3a3a !important; }
+#tn-picker [data-a="slate"]      { background-color: #4a6a82 !important; }
+#tn-picker [data-a="ink"]        { background-color: #2a2620 !important; }
+#tn-picker [data-a="terracotta"] { background-color: #c96b3a !important; }
