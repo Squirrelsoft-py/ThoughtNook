@@ -66,3 +66,5 @@ jobs:
             --head "$BRANCH" \
             --base main \
             --draft
+          echo "::error::Upstream sync has merge conflicts. A draft PR has been opened — please resolve and merge it."
+          exit 1
