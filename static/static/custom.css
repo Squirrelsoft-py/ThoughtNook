@@ -1,12 +1,20 @@
 /*
- * ThoughtNook theme — warm library aesthetic
+ * ThoughtNook theme — warm library aesthetic, Sage accent
  *
- * Palette from ThoughtNook.html:
- *   Paper   #faf9f5   oklch(0.98 0.008 85)
- *   Cream   #f6f1e7   oklch(0.95 0.018 85)
- *   Text    #2a2620   oklch(0.19 0.012 60)
- *   Muted   #8a8275   oklch(0.57 0.01  70)
- *   Green   #5a7a48   oklch(0.51 0.09 145)
+ * Base palette (from ThoughtNook.html CSS variables):
+ *   page      #faf6ed   oklch(0.974 0.013 87)  — lightest bg / input areas
+ *   paper     #f4ede0   oklch(0.948 0.019 83)  — main chat background
+ *   page-2    #efe6d2   oklch(0.927 0.028 87)  — sidebar background
+ *   rule-soft #e6dcc4   oklch(0.896 0.034 88)  — soft borders
+ *   rule      #d9cfb5   oklch(0.856 0.037 90)  — main borders / dividers
+ *   ink-mute  #8a8275   oklch(0.610 0.021 80)  — muted / placeholder text
+ *   ink-soft  #5a5247   oklch(0.443 0.020 76)  — secondary text
+ *   ink       #2a2620   oklch(0.271 0.012 78)  — primary text
+ *
+ * Sage accent (from ThoughtNook.html ACCENTS.sage):
+ *   base      #5a7a48   oklch(0.542 0.083 135) — interactive / buttons
+ *   deep      #3a5a2c   oklch(0.430 0.081 137) — hover / pressed
+ *   soft      #cfdcc1   oklch(0.877 0.039 128) — subtle tints
  *
  * Fonts: DM Sans (UI), Spectral (headings), JetBrains Mono (code)
  *
@@ -41,34 +49,33 @@ samp {
   font-family: "JetBrains Mono", ui-monospace, monospace !important;
 }
 
-/* ── Warm gray scale (light mode) ───────────────────────────────────────── */
-/* Backgrounds shift to paper/cream; text shifts to warm dark brown #2a2620 */
+/* ── Parchment scale (light mode) ───────────────────────────────────────── */
 :root:not(.dark) {
-  --color-gray-50: oklch(0.98 0.008 85) !important; /* paper white #faf9f5 */
-  --color-gray-100: oklch(0.95 0.018 85) !important; /* cream #f6f1e7 */
-  --color-gray-200: oklch(0.9 0.012 82) !important;
-  --color-gray-300: oklch(0.84 0.01 82) !important;
-  --color-gray-400: oklch(0.74 0.008 80) !important;
-  --color-gray-500: oklch(0.62 0.006 80) !important; /* muted text ≈ #8a8275 */
-  --color-gray-600: oklch(0.5 0.005 80) !important;
-  --color-gray-700: oklch(0.36 0.01 65) !important;
-  --color-gray-800: oklch(0.27 0.012 62) !important;
-  --color-gray-850: oklch(0.22 0.012 61) !important;
-  --color-gray-900: oklch(0.19 0.012 60) !important; /* primary text ≈ #2a2620 */
-  --color-gray-950: oklch(0.14 0.01 60) !important;
+  --color-gray-50:  oklch(0.974 0.013 87) !important; /* page      #faf6ed */
+  --color-gray-100: oklch(0.948 0.019 83) !important; /* paper     #f4ede0 */
+  --color-gray-200: oklch(0.927 0.028 87) !important; /* page-2    #efe6d2 */
+  --color-gray-300: oklch(0.896 0.034 88) !important; /* rule-soft #e6dcc4 */
+  --color-gray-400: oklch(0.856 0.037 90) !important; /* rule      #d9cfb5 */
+  --color-gray-500: oklch(0.610 0.021 80) !important; /* ink-mute  #8a8275 */
+  --color-gray-600: oklch(0.520 0.018 78) !important;
+  --color-gray-700: oklch(0.443 0.020 76) !important; /* ink-soft  #5a5247 */
+  --color-gray-800: oklch(0.350 0.016 76) !important;
+  --color-gray-850: oklch(0.305 0.014 77) !important;
+  --color-gray-900: oklch(0.271 0.012 78) !important; /* ink       #2a2620 */
+  --color-gray-950: oklch(0.190 0.010 76) !important;
 }
 
-/* ── Forest green accent — replaces default blue ────────────────────────── */
+/* ── Sage accent — replaces default blue ────────────────────────────────── */
 :root {
-  --color-blue-300: oklch(0.68 0.08 145) !important;
-  --color-blue-400: oklch(0.6 0.09 145) !important;
-  --color-blue-500: oklch(0.51 0.09 145) !important; /* #5a7a48 */
-  --color-blue-600: oklch(0.44 0.09 145) !important;
-  --color-blue-700: oklch(0.38 0.08 145) !important;
+  --color-blue-300: oklch(0.750 0.030 130) !important; /* near sage-soft */
+  --color-blue-400: oklch(0.650 0.055 132) !important;
+  --color-blue-500: oklch(0.542 0.083 135) !important; /* sage base #5a7a48 */
+  --color-blue-600: oklch(0.480 0.082 136) !important;
+  --color-blue-700: oklch(0.430 0.081 137) !important; /* sage deep #3a5a2c */
 }
 
-/* ── Dark mode — warm undertone ─────────────────────────────────────────── */
+/* ── Dark mode — warm dark undertone ────────────────────────────────────── */
 :root.dark {
-  --color-gray-900: oklch(0.19 0.008 130) !important;
-  --color-gray-950: oklch(0.14 0.008 130) !important;
+  --color-gray-900: oklch(0.160 0.010 75) !important;
+  --color-gray-950: oklch(0.120 0.010 74) !important;
 }
