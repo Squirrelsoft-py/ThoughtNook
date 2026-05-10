@@ -1,16 +1,39 @@
 /*
- * custom.css — OpenWebUI customizations
+ * ThoughtNook theme — warm library aesthetic
  *
- * This file is served at /static/custom.css and loaded by OpenWebUI at runtime.
- * It survives upstream merges because it is not part of any upstream-tracked file.
+ * Palette from ThoughtNook.html:
+ *   Paper  #faf9f5  oklch(0.98 0.008  85)
+ *   Cream  #f6f1e7  oklch(0.95 0.018  85)
+ *   Green  #5a7a48  oklch(0.51 0.09  145)
  *
- * Add your CSS overrides below. Use CSS variables where possible so they
- * work with both light and dark modes. OpenWebUI defines its theme tokens
- * in src/tailwind.css using oklch() color values.
- *
- * Example — change the primary accent color:
- *   :root { --color-primary: oklch(60% 0.2 250); }
- *
- * Example — hide the "New conversation" tooltip:
- *   [data-tooltip="New conversation"] { display: none; }
+ * Only CSS variable overrides — no Tailwind class selectors, no layout
+ * changes. This file is never touched by upstream; it will never conflict.
  */
+
+/* ── Warm gray scale (light mode only) ──────────────────────────────────── */
+/* Shifts the neutral grays toward a warm paper tone. */
+:root:not(.dark) {
+  --color-gray-50:  oklch(0.98 0.008  85);   /* paper white  #faf9f5 */
+  --color-gray-100: oklch(0.95 0.018  85);   /* cream        #f6f1e7 */
+  --color-gray-200: oklch(0.90 0.012  82);
+  --color-gray-300: oklch(0.84 0.010  82);
+  --color-gray-400: oklch(0.74 0.008  80);
+  --color-gray-500: oklch(0.62 0.006  80);
+  --color-gray-600: oklch(0.50 0.005  80);
+}
+
+/* ── Forest green accent (replaces default blue) ─────────────────────────── */
+/* Affects buttons, checkboxes, focus rings, and links in both modes. */
+:root {
+  --color-blue-300: oklch(0.68 0.08  145);
+  --color-blue-400: oklch(0.60 0.09  145);
+  --color-blue-500: oklch(0.51 0.09  145);   /* #5a7a48 */
+  --color-blue-600: oklch(0.44 0.09  145);
+  --color-blue-700: oklch(0.38 0.08  145);
+}
+
+/* ── Dark mode — subtle warm undertone ───────────────────────────────────── */
+:root.dark {
+  --color-gray-900: oklch(0.19 0.008 130);
+  --color-gray-950: oklch(0.14 0.008 130);
+}
