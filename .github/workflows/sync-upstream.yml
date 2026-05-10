@@ -1,0 +1,73 @@
+name: Sync Upstream
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # daily at 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Add upstream remote
+        run: git remote add upstream https://github.com/open-webui/open-webui.git
+
+      - name: Fetch upstream
+        run: git fetch upstream main
+
+      - name: Check for new commits
+        id: check
+        run: |
+          BEHIND=$(git rev-list HEAD..upstream/main --count)
+          echo "behind=$BEHIND" >> "$GITHUB_OUTPUT"
+
+      - name: Attempt merge
+        if: steps.check.outputs.behind != '0'
+        id: merge
+        continue-on-error: true
+        run: git merge upstream/main --no-edit
+
+      - name: Push merged main
+        if: steps.check.outputs.behind != '0' && steps.merge.outcome == 'success'
+        run: git push origin main
+
+      - name: Open conflict PR
+        if: steps.check.outputs.behind != '0' && steps.merge.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git merge --abort
+          BRANCH="upstream-sync-$(date +%Y%m%d-%H%M)"
+          git checkout -b "$BRANCH"
+          # Re-run merge; conflict markers land in the working tree
+          git merge upstream/main --no-edit || true
+          git add -A
+          git commit -m "chore: sync upstream (conflicts need resolution)"
+          git push origin "$BRANCH"
+          gh pr create \
+            --title "Upstream sync $(date +%Y-%m-%d) — conflicts need resolution" \
+            --body "$(cat <<'EOF'
+Automatic daily sync from [open-webui/open-webui](https://github.com/open-webui/open-webui).
+
+This PR contains merge conflicts (marked with `<<<<<<<` / `=======` / `>>>>>>>`).
+Please resolve them, then merge this PR into \`main\`.
+EOF
+)" \
+            --head "$BRANCH" \
+            --base main \
+            --draft

@@ -1,0 +1,16 @@
+/*
+ * custom.css — OpenWebUI customizations
+ *
+ * This file is served at /static/custom.css and loaded by OpenWebUI at runtime.
+ * It survives upstream merges because it is not part of any upstream-tracked file.
+ *
+ * Add your CSS overrides below. Use CSS variables where possible so they
+ * work with both light and dark modes. OpenWebUI defines its theme tokens
+ * in src/tailwind.css using oklch() color values.
+ *
+ * Example — change the primary accent color:
+ *   :root { --color-primary: oklch(60% 0.2 250); }
+ *
+ * Example — hide the "New conversation" tooltip:
+ *   [data-tooltip="New conversation"] { display: none; }
+ */
