@@ -72,9 +72,41 @@
 	}
 
 	$: models = selectedModels.map((id) => $_models.find((m) => m.id === id));
+
+	// ── ThoughtNook welcome splash ──────────────────────────────────────────
+	const SPLASH_SUFFIXES = [
+		'grab a coffee and chat.',
+		"what's on your mind?",
+		'what are you thinking about?',
+		'ready when you are.',
+		'ask me anything.',
+		"let's think together.",
+		'your ideas are welcome here.',
+		'a good question is a great start.',
+		'the page is yours.',
+		'something on your mind?'
+	];
+
+	function splashLine(): string {
+		const h = new Date().getHours();
+		const prefix = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+		const suffix = SPLASH_SUFFIXES[Math.floor(Math.random() * SPLASH_SUFFIXES.length)];
+		return `${prefix} — ${suffix}`;
+	}
+
+	const splash = splashLine();
 </script>
 
 <div class="m-auto w-full max-w-6xl px-2 @2xl:px-20 translate-y-6 py-24 text-center">
+	{#if !$selectedFolder}
+		<p
+			class="text-xs mb-3 select-none"
+			style="color: var(--tn-accent-deep); opacity: 0.75;"
+		>
+			{splash}
+		</p>
+	{/if}
+
 	{#if $temporaryChatEnabled}
 		<Tooltip
 			content={$i18n.t("This chat won't appear in history and your messages will not be saved.")}
