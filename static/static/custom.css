@@ -376,6 +376,13 @@ hr.border-gray-50 {
   color: var(--tn-accent) !important;
 }
 
+/* ── Modals (citation, settings, etc.) ─────────────────────────────────── */
+/* Modal.svelte hardcodes bg-white/95 and border-white — remap to parchment. */
+:root:not(.dark) .modal > div {
+  background-color: rgba(250, 246, 237, 0.97) !important; /* ThoughtNook page #faf6ed */
+  border-color: #e6dcc4 !important;                       /* ThoughtNook rule-soft */
+}
+
 /* ── Chat input — accent tint + border on focus ─────────────────────────── */
 #message-input-container:focus-within {
   border-color: var(--tn-accent) !important;
@@ -417,11 +424,3 @@ hr.border-gray-50 {
   color: var(--tn-accent-deep) !important;
 }
 
-/* ── Assistant message avatar — accent ring ─────────────────────────────── */
-/* ThoughtNook: "AI avatar background → var(--accent)".
-   OpenWebUI renders the model icon as an img; a thin ring is the CSS-only equiv. */
-.assistant-message-profile-image {
-  outline: 1.5px solid var(--tn-accent) !important;
-  outline-offset: 1px;
-  border-radius: 50%;
-}
