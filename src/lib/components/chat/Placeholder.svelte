@@ -99,10 +99,7 @@
 
 <div class="m-auto w-full max-w-6xl px-2 @2xl:px-20 translate-y-6 py-24 text-center">
 	{#if !$selectedFolder}
-		<p
-			class="text-xs mb-3 select-none"
-			style="color: var(--tn-accent-deep); opacity: 0.75;"
-		>
+		<p class="text-xs mb-3 select-none" style="color: var(--tn-accent-deep); opacity: 0.75;">
 			{splash}
 		</p>
 	{/if}
