@@ -49,6 +49,7 @@
 /* ── Font assignments ────────────────────────────────────────────────────── */
 html {
   font-family: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif !important;
+  background-color: #f4ede0 !important; /* ThoughtNook paper — fills any un-painted area */
 }
 
 h1,
@@ -235,9 +236,19 @@ samp {
   color: var(--tn-accent) !important;
 }
 
-/* Selected chat item — accent-tint background */
+/* Sidebar panel — ThoughtNook page-2 (#efe6d2), darker than the chat area */
+:root:not(.dark) #sidebar {
+  background-color: #efe6d2 !important;
+}
+
+/* New chat button icon — accent color (ThoughtNook: "'+' icon → var(--accent)") */
+:root:not(.dark) #sidebar-new-chat-button {
+  color: var(--tn-accent) !important;
+}
+
+/* Selected chat item — accent-soft for clearly visible tint on the parchment sidebar */
 :root:not(.dark) #sidebar-chat-item .selected {
-  background-color: var(--tn-accent-tint) !important;
+  background-color: var(--tn-accent-soft) !important;
 }
 
 /* Follow-up question dividers */
