@@ -277,8 +277,8 @@ hr.border-gray-50 {
 /* ── Accent picker widget (collapsed by default; click to expand) ─────────── */
 #tn-picker {
   position: fixed;
-  bottom: 1rem;
-  right: 1.5rem;
+  bottom: 3.75rem; /* above the sidebar user-profile button (~3.25rem tall) */
+  left: 0.75rem;
   z-index: 9000;
   display: flex;
   align-items: center;
@@ -363,12 +363,6 @@ hr.border-gray-50 {
 #tn-picker [data-a="ink"]        { background-color: #2a2620 !important; }
 #tn-picker [data-a="terracotta"] { background-color: #c96b3a !important; }
 
-/* On narrow screens the composer fills the bottom-right — lift the picker above it */
-@media (max-width: 640px) {
-  #tn-picker {
-    bottom: 4.5rem;
-  }
-}
 
 /* ── Settings sidebar active-tab accent ─────────────────────────────────── */
 
