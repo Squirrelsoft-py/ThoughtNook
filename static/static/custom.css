@@ -24,8 +24,17 @@
  *   - Toggle switches:        bg-emerald-500               → --color-emerald-500 (via --tn-accent)
  *   - Checkboxes:             bg-blue-600 focus:ring-blue-500 → --color-blue-*
  *   - Sidebar active mark:    div.rounded-r-lg.bg-black    → --tn-accent
+ *   - Sidebar selected chat:  #sidebar-chat-item .selected → accent-tinted bg
+ *   - Model name (messages):  #response-message-model-name → --tn-accent-deep
+ *   - Action buttons row:     .buttons                     → --tn-accent
+ *   - Chat input focus:       #message-input-container     → accent border
+ *   - Markdown links:         .markdown-prose a            → --tn-accent / --tn-accent-deep
+ *   - Markdown blockquote:    .markdown-prose blockquote   → --tn-accent border
+ *   - Text selection:         ::selection                  → accent/22%
+ *   - Settings active tab:    aria-selected / :not(.text-gray-300) → --tn-accent
+ *   - Active badges:          sky-* scale                  → accent hue
  *
- * Fonts: DM Sans (UI), Spectral (headings), JetBrains Mono (code)
+ * Fonts: DM Sans (UI + .font-primary), Spectral (headings + .font-secondary), JetBrains Mono (code)
  *
  * This file is compiled into build/static/custom.css by the SvelteKit build
  * and served at /static/custom.css. Edit here; push to trigger a CI rebuild.
@@ -56,6 +65,15 @@ code,
 kbd,
 samp {
   font-family: "JetBrains Mono", ui-monospace, monospace !important;
+}
+
+/* OpenWebUI applies .font-primary (Archivo) and .font-secondary (InstrumentSerif) via
+   class selectors that beat our html element rule — remap them to our theme fonts. */
+.font-primary {
+  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+.font-secondary {
+  font-family: "Spectral", Georgia, serif !important;
 }
 
 /* ── Parchment scale (light mode) ───────────────────────────────────────── */
@@ -91,6 +109,9 @@ samp {
   /* default = sage */
   --tn-accent:        oklch(0.542 0.083 135);
   --tn-accent-deep:   oklch(0.430 0.081 137);
+  --tn-accent-soft:   #cfdcc1;
+  --tn-accent-tint:   rgba( 90, 122,  72, 0.10);
+  --tn-accent-glow:   rgba( 90, 122,  72, 0.20);
   --color-blue-300:   oklch(0.750 0.030 130) !important;
   --color-blue-400:   oklch(0.650 0.055 132) !important;
   --color-blue-500:   oklch(0.542 0.083 135) !important; /* #5a7a48 */
@@ -101,6 +122,9 @@ samp {
 :root[data-accent="sage"] {
   --tn-accent:        oklch(0.542 0.083 135);
   --tn-accent-deep:   oklch(0.430 0.081 137);
+  --tn-accent-soft:   #cfdcc1;
+  --tn-accent-tint:   rgba( 90, 122,  72, 0.10);
+  --tn-accent-glow:   rgba( 90, 122,  72, 0.20);
   --color-blue-300:   oklch(0.750 0.030 130) !important;
   --color-blue-400:   oklch(0.650 0.055 132) !important;
   --color-blue-500:   oklch(0.542 0.083 135) !important; /* #5a7a48 */
@@ -111,6 +135,9 @@ samp {
 :root[data-accent="ochre"] {
   --tn-accent:        oklch(0.649 0.125 78);
   --tn-accent-deep:   oklch(0.492 0.094 80);
+  --tn-accent-soft:   #ecd9a8;
+  --tn-accent-tint:   rgba(184, 132,  33, 0.10);
+  --tn-accent-glow:   rgba(184, 132,  33, 0.22);
   --color-blue-300:   oklch(0.800 0.050 85)  !important;
   --color-blue-400:   oklch(0.720 0.085 80)  !important;
   --color-blue-500:   oklch(0.649 0.125 78)  !important; /* #b88421 */
@@ -121,6 +148,9 @@ samp {
 :root[data-accent="burgundy"] {
   --tn-accent:        oklch(0.483 0.129 23);
   --tn-accent-deep:   oklch(0.378 0.101 23);
+  --tn-accent-soft:   #e3bfbf;
+  --tn-accent-tint:   rgba(154,  58,  58, 0.10);
+  --tn-accent-glow:   rgba(154,  58,  58, 0.20);
   --color-blue-300:   oklch(0.740 0.035 20)  !important;
   --color-blue-400:   oklch(0.620 0.080 22)  !important;
   --color-blue-500:   oklch(0.483 0.129 23)  !important; /* #9a3a3a */
@@ -131,6 +161,9 @@ samp {
 :root[data-accent="slate"] {
   --tn-accent:        oklch(0.509 0.053 242);
   --tn-accent-deep:   oklch(0.397 0.050 244);
+  --tn-accent-soft:   #c5d4df;
+  --tn-accent-tint:   rgba( 74, 106, 130, 0.10);
+  --tn-accent-glow:   rgba( 74, 106, 130, 0.20);
   --color-blue-300:   oklch(0.750 0.020 241) !important;
   --color-blue-400:   oklch(0.630 0.037 241) !important;
   --color-blue-500:   oklch(0.509 0.053 242) !important; /* #4a6a82 */
@@ -141,6 +174,9 @@ samp {
 :root[data-accent="ink"] {
   --tn-accent:        oklch(0.350 0.013 79);
   --tn-accent-deep:   oklch(0.271 0.012 78);
+  --tn-accent-soft:   #cfc9bd;
+  --tn-accent-tint:   rgba( 42,  38,  32, 0.08);
+  --tn-accent-glow:   rgba( 42,  38,  32, 0.16);
   --color-blue-300:   oklch(0.700 0.012 82)  !important;
   --color-blue-400:   oklch(0.500 0.014 80)  !important;
   --color-blue-500:   oklch(0.350 0.013 79)  !important;
@@ -151,6 +187,9 @@ samp {
 :root[data-accent="terracotta"] {
   --tn-accent:        oklch(0.627 0.135 46);
   --tn-accent-deep:   oklch(0.460 0.112 43);
+  --tn-accent-soft:   #f0c69f;
+  --tn-accent-tint:   rgba(201, 107,  58, 0.10);
+  --tn-accent-glow:   rgba(201, 107,  58, 0.20);
   --color-blue-300:   oklch(0.770 0.055 57)  !important;
   --color-blue-400:   oklch(0.700 0.100 50)  !important;
   --color-blue-500:   oklch(0.627 0.135 46)  !important; /* #c96b3a */
@@ -186,9 +225,9 @@ samp {
   border: 1px solid var(--tn-accent) !important;
 }
 
-/* Model name next to assistant avatar */
+/* Model name next to assistant avatar — deep accent for legibility at small size */
 #response-message-model-name {
-  color: var(--tn-accent) !important;
+  color: var(--tn-accent-deep) !important;
 }
 
 /* Response action buttons row (copy, regenerate, thumbs, read aloud…) */
@@ -196,9 +235,9 @@ samp {
   color: var(--tn-accent) !important;
 }
 
-/* Selected chat item — accent inset ring in sidebar */
+/* Selected chat item — accent-tint background */
 :root:not(.dark) #sidebar-chat-item .selected {
-  box-shadow: inset 0 0 0 1px var(--tn-accent) !important;
+  background-color: var(--tn-accent-tint) !important;
 }
 
 /* Follow-up question dividers */
@@ -208,7 +247,7 @@ hr.border-gray-50 {
 
 /* Active integration / tool badges — remap sky → accent */
 :root {
-  --color-sky-50:  oklch(from var(--tn-accent) 0.970 calc(c * 0.15) h) !important;
+  --color-sky-50:  var(--tn-accent-tint) !important;  /* exact tint token for "on" bg */
   --color-sky-100: oklch(from var(--tn-accent) 0.940 calc(c * 0.25) h) !important;
   --color-sky-200: oklch(from var(--tn-accent) 0.880 calc(c * 0.45) h) !important;
   --color-sky-300: oklch(from var(--tn-accent) 0.750 calc(c * 0.70) h) !important;
@@ -218,7 +257,7 @@ hr.border-gray-50 {
   --color-sky-700: var(--tn-accent-deep) !important;
 }
 
-/* ── Accent picker widget ────────────────────────────────────────────────── */
+/* ── Accent picker widget (collapsed by default; click to expand) ─────────── */
 #tn-picker {
   position: fixed;
   bottom: 1rem;
@@ -227,7 +266,7 @@ hr.border-gray-50 {
   display: flex;
   align-items: center;
   gap: 5px;
-  padding: 5px 8px;
+  padding: 5px;
   background: oklch(0.948 0.019 83 / 0.92);
   backdrop-filter: blur(8px);
   border: 1px solid oklch(0.856 0.037 90);
@@ -240,7 +279,42 @@ hr.border-gray-50 {
   border-color: oklch(0.260 0.012 76);
 }
 
-#tn-picker button {
+/* Toggle button — shows palette icon in current accent color */
+#tn-picker-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: transparent !important;
+  transition: transform 0.15s;
+}
+
+#tn-picker-toggle:hover {
+  transform: scale(1.15);
+  background: transparent !important;
+}
+
+/* Swatches — hidden until expanded */
+#tn-picker-swatches {
+  display: none;
+  align-items: center;
+  gap: 5px;
+}
+
+#tn-picker.expanded #tn-picker-swatches {
+  display: flex;
+}
+
+#tn-picker.expanded {
+  padding: 5px 8px;
+}
+
+#tn-picker-swatches button {
   width: 16px;
   height: 16px;
   border-radius: 50%;
@@ -249,21 +323,21 @@ hr.border-gray-50 {
   padding: 0;
   transition: transform 0.15s, box-shadow 0.15s;
   outline: none;
-  /* override the primary-button rule above for these swatches */
   background-color: unset !important;
 }
 
-#tn-picker button:hover {
+#tn-picker-swatches button:hover {
   transform: scale(1.25);
   background-color: unset !important;
 }
 
-#tn-picker button.on {
+#tn-picker-swatches button.on {
+  background-color: unset !important;
   box-shadow: 0 0 0 2px oklch(0.948 0.019 83);
   transform: scale(1.2);
 }
 
-.dark #tn-picker button.on {
+.dark #tn-picker-swatches button.on {
   box-shadow: 0 0 0 2px oklch(0.120 0.010 74);
 }
 
@@ -273,3 +347,65 @@ hr.border-gray-50 {
 #tn-picker [data-a="slate"]      { background-color: #4a6a82 !important; }
 #tn-picker [data-a="ink"]        { background-color: #2a2620 !important; }
 #tn-picker [data-a="terracotta"] { background-color: #c96b3a !important; }
+
+/* ── Settings sidebar active-tab accent ─────────────────────────────────── */
+
+/* User settings modal nav */
+#settings-tabs-container [role="tab"][aria-selected="true"] {
+  color: var(--tn-accent) !important;
+}
+
+/* Admin settings nav (active link has no text-gray-300 class) */
+#admin-settings-tabs-container a:not(.text-gray-300) {
+  color: var(--tn-accent) !important;
+}
+
+/* ── Chat input — accent tint + border on focus ─────────────────────────── */
+#message-input-container:focus-within {
+  border-color: var(--tn-accent) !important;
+  background-color: var(--tn-accent-tint) !important;
+}
+
+/* ── Rendered markdown (assistant & user messages) ──────────────────────── */
+
+.markdown-prose a {
+  color: var(--tn-accent) !important;
+  text-decoration-color: oklch(from var(--tn-accent) l c h / 0.40) !important;
+}
+
+.markdown-prose a:hover {
+  color: var(--tn-accent-deep) !important;
+  text-decoration-color: var(--tn-accent-deep) !important;
+}
+
+.markdown-prose blockquote {
+  border-left-color: var(--tn-accent) !important;
+}
+
+.markdown-prose hr {
+  border-color: oklch(from var(--tn-accent) 0.80 calc(c * 0.40) h / 0.35) !important;
+}
+
+/* ── Text selection ──────────────────────────────────────────────────────── */
+::selection {
+  background-color: var(--tn-accent-glow) !important;
+  color: inherit !important;
+}
+
+/* ── Inline code spans in rendered messages ──────────────────────────────── */
+/* Uses --accent-soft (pale tint) bg + --accent-deep text — ThoughtNook pattern
+   for "attachment chip type-stamp" / file icon paper tab. Only code spans, not
+   fenced code blocks (pre > code). */
+.markdown-prose :not(pre) > code {
+  background-color: var(--tn-accent-soft) !important;
+  color: var(--tn-accent-deep) !important;
+}
+
+/* ── Assistant message avatar — accent ring ─────────────────────────────── */
+/* ThoughtNook: "AI avatar background → var(--accent)".
+   OpenWebUI renders the model icon as an img; a thin ring is the CSS-only equiv. */
+.assistant-message-profile-image {
+  outline: 1.5px solid var(--tn-accent) !important;
+  outline-offset: 1px;
+  border-radius: 50%;
+}

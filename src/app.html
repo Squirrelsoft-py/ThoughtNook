@@ -116,33 +116,79 @@
 		</script>
 
 		<script>
-			// ThoughtNook accent picker — applies stored accent before first paint to avoid FOUC
+			// ThoughtNook accent picker — FOUC prevention + collapsible widget
 			(() => {
 				const accent = localStorage.thoughtnookAccent || 'sage';
 				document.documentElement.dataset.accent = accent;
 
 				const accents = ['sage', 'ochre', 'burgundy', 'slate', 'ink', 'terracotta'];
+				const colors = {
+					sage: '#5a7a48', ochre: '#b88421', burgundy: '#9a3a3a',
+					slate: '#4a6a82', ink: '#2a2620', terracotta: '#c96b3a'
+				};
+
+				let currentAccent = accent;
+				let expanded = false;
+
+				const paletteIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:block;pointer-events:none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.1 0 2-.9 2-2 0-.53-.2-1-.49-1.36-.29-.36-.48-.83-.48-1.34 0-1.1.9-2 2-2h2.36c3.1 0 5.61-2.51 5.61-5.61C23 6.5 18.04 2 12 2zm-5.5 10c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>';
 
 				document.addEventListener('DOMContentLoaded', () => {
 					const picker = document.createElement('div');
 					picker.id = 'tn-picker';
-					picker.innerHTML = accents
-						.map(
-							(a) =>
-								`<button data-a="${a}" title="${a}"${a === accent ? ' class="on"' : ''}></button>`
-						)
-						.join('');
-					picker.addEventListener('click', (e) => {
+
+					const toggle = document.createElement('button');
+					toggle.id = 'tn-picker-toggle';
+					toggle.title = 'Accent color';
+					toggle.innerHTML = paletteIcon;
+					toggle.style.color = colors[currentAccent];
+
+					const swatches = document.createElement('div');
+					swatches.id = 'tn-picker-swatches';
+					accents.forEach((a) => {
+						const btn = document.createElement('button');
+						btn.dataset.a = a;
+						btn.title = a;
+						if (a === currentAccent) btn.classList.add('on');
+						swatches.appendChild(btn);
+					});
+
+					toggle.addEventListener('click', (e) => {
+						e.stopPropagation();
+						expanded = !expanded;
+						picker.classList.toggle('expanded', expanded);
+					});
+
+					document.addEventListener('click', () => {
+						if (expanded) {
+							expanded = false;
+							picker.classList.remove('expanded');
+						}
+					});
+
+					swatches.addEventListener('click', (e) => {
+						e.stopPropagation();
 						const btn = e.target.closest('[data-a]');
 						if (!btn) return;
 						const a = btn.dataset.a;
+						currentAccent = a;
 						localStorage.thoughtnookAccent = a;
 						document.documentElement.dataset.accent = a;
-						picker
-							.querySelectorAll('[data-a]')
-							.forEach((b) => b.classList.toggle('on', b.dataset.a === a));
+						toggle.style.color = colors[a];
+						swatches.querySelectorAll('[data-a]').forEach((b) => b.classList.toggle('on', b.dataset.a === a));
 					});
+
+					picker.appendChild(toggle);
+					picker.appendChild(swatches);
 					document.body.appendChild(picker);
+
+					const updateVisibility = () => {
+						picker.style.display = window.location.pathname.startsWith('/admin') ? 'none' : '';
+					};
+					updateVisibility();
+
+					const origPushState = history.pushState.bind(history);
+					history.pushState = (...args) => { origPushState(...args); updateVisibility(); };
+					window.addEventListener('popstate', updateVisibility);
 				});
 			})();
 		</script>
