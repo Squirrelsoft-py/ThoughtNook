@@ -241,6 +241,12 @@ samp {
   background-color: #efe6d2 !important;
 }
 
+/* Main chat area — ThoughtNook paper (#f4ede0), between sidebar and input cards.
+   Chat.svelte applies bg-white directly, so html background-color alone won't win. */
+:root:not(.dark) #chat-container {
+  background-color: #f4ede0 !important;
+}
+
 /* New chat button icon — accent color (ThoughtNook: "'+' icon → var(--accent)") */
 :root:not(.dark) #sidebar-new-chat-button {
   color: var(--tn-accent) !important;
