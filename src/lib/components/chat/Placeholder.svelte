@@ -99,7 +99,10 @@
 
 <div class="m-auto w-full max-w-6xl px-2 @2xl:px-20 translate-y-6 py-24 text-center">
 	{#if !$selectedFolder}
-		<p class="text-xs mb-3 select-none" style="color: var(--tn-accent-deep); opacity: 0.75;">
+		<p
+			class="tn-splash text-sm mb-3 select-none"
+			style="color: var(--tn-accent-deep); opacity: 0.75;"
+		>
 			{splash}
 		</p>
 	{/if}
@@ -179,7 +182,7 @@
 								placement="top"
 								className=" flex items-center "
 							>
-								<span class="line-clamp-1">
+								<span class="line-clamp-1" style="color: var(--tn-accent);">
 									{models[selectedModelIdx]?.name}
 								</span>
 							</Tooltip>
